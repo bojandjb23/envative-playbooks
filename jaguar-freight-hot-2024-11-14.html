@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jaguar Freight - HOT Playbook</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 32px 24px 28px;
+    }
+    .page-header .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .header-company {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .header-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .header-badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .header-score {
+      font-size: 32px;
+      font-weight: 800;
+      text-align: right;
+    }
+    .header-score-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .header-details {
+      display: flex;
+      gap: 24px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+    }
+    .header-details span { white-space: nowrap; }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .content {
+      padding: 24px 0 48px;
+    }
+    .section {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .section > summary {
+      padding: 16px 22px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+    }
+    .section > summary::-webkit-details-marker { display: none; }
+    .section > summary::before {
+      content: '';
+      width: 0; height: 0;
+      border-left: 5px solid #94a3b8;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+    .section[open] > summary::before {
+      transform: rotate(90deg);
+    }
+    .section > summary:hover {
+      background: #f8fafc;
+    }
+    .section > summary h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 0;
+    }
+    .section-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .section-body {
+      padding: 18px 22px;
+    }
+    .toggle-controls {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+    .toggle-btn {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: #475569;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .toggle-btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .section-body table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .draft-email {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 20px 24px;
+      font-family: Georgia, 'Times New Roman', serif;
+      line-height: 1.8;
+      color: #334155;
+      white-space: pre-wrap;
+      font-size: 14px;
+    }
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+    .footer a {
+      color: #64748b;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      color: #3b82f6;
+    }
+    .markdown-content {
+      line-height: 1.7;
+      color: #334155;
+    }
+    .markdown-content p { margin: 8px 0; }
+    .markdown-content strong { color: #1e293b; }
+    .markdown-content blockquote {
+      border-left: 3px solid #d1d5db;
+      padding: 8px 16px;
+      margin: 12px 0;
+      color: #4b5563;
+      background: #f9fafb;
+      border-radius: 0 4px 4px 0;
+    }
+    .markdown-content ul, .markdown-content ol {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    .markdown-content li { margin: 4px 0; }
+
+    @media (max-width: 640px) {
+      .page-header { padding: 24px 16px 20px; }
+      .header-company { font-size: 22px; }
+      .header-score { font-size: 26px; }
+      .header-details { gap: 12px; font-size: 13px; }
+      .container { padding: 0 16px; }
+      .section-body { padding: 14px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="container">
+      <div class="header-top">
+        <div>
+          <div class="header-company">Jaguar Freight</div>
+          <div class="header-meta">
+            <span style="display:inline-block;background:#dc2626;color:#ffffff;padding:4px 14px;border-radius:20px;font-weight:700;font-size:13px;letter-spacing:0.5px;">HOT</span>
+            <span style="display:inline-block;background:#dcfce7;color:#166534;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;">HIGH (90%)</span>
+            <span class="header-badge" style="background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);">Tier 1</span>
+            <span class="header-badge" style="background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);">Pre-Podcast Call</span>
+          </div>
+        </div>
+        <div>
+          <div class="header-score">84<span style="font-size:16px;font-weight:400;opacity:0.7;">/100</span></div>
+          <div class="header-score-label">Lead Score</div>
+        </div>
+      </div>
+      <div class="header-details">
+        <span>Simon Kaye &middot; Founder/CEO</span>
+        
+        
+        <span>2024-11-14</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="content">
+
+      <!-- Tier Banner -->
+      <div style="background:#d1fae5;border:1px solid #6ee7b7;border-radius:8px;padding:14px 18px;margin:16px 0;">
+      <div style="font-weight:700;color:#065f46;font-size:14px;">HIGH CONFIDENCE (90/100) - Full Data Available</div>
+      <div style="color:#047857;font-size:13px;margin-top:4px;">This playbook is based on comprehensive data: full transcript, call breakdown, and CRM history.</div>
+    </div>
+
+      <!-- Outreach Status Banner -->
+      <div style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:8px;padding:16px 20px;margin:16px 0;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">&#x26a0;&#xfe0f;</span>
+        <div>
+          <div style="font-weight:700;color:#374151;font-size:15px;">OUTREACH STATUS: UNKNOWN</div>
+          <div style="color:#6b7280;font-size:13px;margin-top:4px;">Outreach status could not be determined. Verify podcast status and CRM activity before proceeding.</div>
+        </div>
+      </div>
+    </div>
+
+      <!-- SDR Context Briefing (always visible, not collapsible) -->
+      
+
+      <!-- Toggle Controls -->
+      <div class="toggle-controls">
+        <button class="toggle-btn" onclick="document.querySelectorAll('.section').forEach(s=>s.open=true)">Expand All</button>
+        <button class="toggle-btn" onclick="document.querySelectorAll('.section').forEach(s=>s.open=false)">Collapse All</button>
+      </div>
+
+      <!-- Quick Facts -->
+      <details class="section" open>
+        <summary>
+          <div class="section-icon" style="background:#eff6ff;color:#3b82f6;">&#x1f4cb;</div>
+          <h2>Quick Facts</h2>
+        </summary>
+        <div class="section-body">
+          <table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;margin:12px 0;">
+    <thead><tr><th style="padding:10px 14px;text-align:left;background:#f8fafc;border-bottom:2px solid #e2e8f0;font-weight:600;color:#334155;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;">Field</th><th style="padding:10px 14px;text-align:left;background:#f8fafc;border-bottom:2px solid #e2e8f0;font-weight:600;color:#334155;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;">Value</th></tr></thead>
+    <tbody><tr style="background:#ffffff;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Contact</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">Simon Kaye</td>
+    </tr>
+<tr style="background:#f8fafc;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Role</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">Founder/CEO</td>
+    </tr>
+<tr style="background:#ffffff;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Company</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;"><a href="jaguarfreight.com" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:none;border-bottom:1px solid #93c5fd;">Jaguar Freight</a></td>
+    </tr>
+<tr style="background:#f8fafc;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Industry</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">Unknown</td>
+    </tr>
+<tr style="background:#ffffff;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Size</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">Unknown</td>
+    </tr>
+<tr style="background:#f8fafc;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Location</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">Unknown</td>
+    </tr>
+<tr style="background:#ffffff;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Call Date</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">2024-11-14</td>
+    </tr>
+<tr style="background:#f8fafc;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Call Type</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">Pre-Podcast Call</td>
+    </tr>
+<tr style="background:#ffffff;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Classification</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">HOT</td>
+    </tr>
+<tr style="background:#f8fafc;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Score</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">84/100</td>
+    </tr>
+<tr style="background:#ffffff;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Signal Strength</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">5/5</td>
+    </tr>
+<tr style="background:#f8fafc;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Confidence</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">HIGH (90%)</td>
+    </tr>
+<tr style="background:#ffffff;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Data Tier</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">Tier 1</td>
+    </tr></tbody>
+  </table>
+        </div>
+      </details>
+
+      <!-- Analysis Summary -->
+      
+
+      <!-- CRM Relationship Context -->
+      <details class="section" open>
+        <summary>
+          <div class="section-icon" style="background:#f0fdf4;color:#16a34a;">&#x1f91d;</div>
+          <h2>CRM Relationship Context</h2>
+        </summary>
+        <div class="section-body">
+          <p style="color:#6b7280;font-style:italic;">No CRM data available.</p>
+        </div>
+      </details>
+
+      <!-- Key Signals & Evidence -->
+      <details class="section" open>
+        <summary>
+          <div class="section-icon" style="background:#fef2f2;color:#dc2626;">&#x1f4e1;</div>
+          <h2>Key Signals &amp; Evidence</h2>
+        </summary>
+        <div class="section-body">
+          <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px 18px;display:flex;align-items:center;gap:10px;">
+    <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#f1f5f9;color:#94a3b8;font-size:14px;flex-shrink:0;">i</span>
+    <div>
+      <div style="font-weight:600;color:#475569;font-size:14px;">No strong signals detected</div>
+      <div style="color:#94a3b8;font-size:12px;margin-top:2px;">This may indicate insufficient data. Consider enriching the source data or reviewing the call transcript manually.</div>
+    </div>
+  </div>
+        </div>
+      </details>
+
+      <!-- Score Breakdown -->
+      
+      <details class="section" open>
+        <summary>
+          <div class="section-icon" style="background:#faf5ff;color:#9333ea;">&#x1f4ca;</div>
+          <h2>Score Breakdown</h2>
+        </summary>
+        <div class="section-body">
+          <table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;margin:12px 0;">
+    <thead><tr><th style="padding:10px 14px;text-align:left;background:#f8fafc;border-bottom:2px solid #e2e8f0;font-weight:600;color:#334155;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;">Dimension</th><th style="padding:10px 14px;text-align:left;background:#f8fafc;border-bottom:2px solid #e2e8f0;font-weight:600;color:#334155;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;">Score</th><th style="padding:10px 14px;text-align:left;background:#f8fafc;border-bottom:2px solid #e2e8f0;font-weight:600;color:#334155;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;">Progress</th></tr></thead>
+    <tbody><tr style="background:#ffffff;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Decision Authority</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">0/25</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">
+        <div style="background:#f1f5f9;border-radius:10px;height:8px;width:100%;min-width:80px;">
+          <div style="background:#dc2626;border-radius:10px;height:8px;width:0%;"></div>
+        </div>
+      </td>
+    </tr>
+<tr style="background:#f8fafc;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Budget Indicators</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">0/25</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">
+        <div style="background:#f1f5f9;border-radius:10px;height:8px;width:100%;min-width:80px;">
+          <div style="background:#dc2626;border-radius:10px;height:8px;width:0%;"></div>
+        </div>
+      </td>
+    </tr>
+<tr style="background:#ffffff;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Pain Point Clarity</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">0/20</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">
+        <div style="background:#f1f5f9;border-radius:10px;height:8px;width:100%;min-width:80px;">
+          <div style="background:#dc2626;border-radius:10px;height:8px;width:0%;"></div>
+        </div>
+      </td>
+    </tr>
+<tr style="background:#f8fafc;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Technical Fit</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">0/15</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">
+        <div style="background:#f1f5f9;border-radius:10px;height:8px;width:100%;min-width:80px;">
+          <div style="background:#dc2626;border-radius:10px;height:8px;width:0%;"></div>
+        </div>
+      </td>
+    </tr>
+<tr style="background:#ffffff;">
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;">Timing Alignment</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">0/15</td>
+      <td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;">
+        <div style="background:#f1f5f9;border-radius:10px;height:8px;width:100%;min-width:80px;">
+          <div style="background:#dc2626;border-radius:10px;height:8px;width:0%;"></div>
+        </div>
+      </td>
+    </tr></tbody>
+  </table><div style="margin-top:12px;font-size:15px;font-weight:700;color:#1e293b;">Total: 84/100</div>
+        </div>
+      </details>
+      
+
+      <!-- Recommended Approach -->
+      
+
+      <!-- Next Best Action -->
+      
+
+      <!-- Draft Communication -->
+      
+
+      <!-- Objection Handling -->
+      
+      <details class="section" open>
+        <summary>
+          <div class="section-icon" style="background:#fef2f2;color:#dc2626;">&#x1f6e1;</div>
+          <h2>Objection Handling</h2>
+        </summary>
+        <div class="section-body">
+          <table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;margin:12px 0;">
+    <thead><tr><th style="padding:10px 14px;text-align:left;background:#f8fafc;border-bottom:2px solid #e2e8f0;font-weight:600;color:#334155;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;">Objection</th><th style="padding:10px 14px;text-align:left;background:#f8fafc;border-bottom:2px solid #e2e8f0;font-weight:600;color:#334155;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;">Response</th></tr></thead>
+    <tbody><tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;"><p style="margin:8px 0;line-height:1.6;">&quot;We&#039;re focused on January MVP&quot;</p></td><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;"><p style="margin:8px 0;line-height:1.6;">&quot;Makes total sense. This is Phase 2 work. Let&#039;s reconnect after go-live when you&#039;re ready for workflow automation.&quot;</p></td></tr>
+<tr style="background:#f8fafc;"><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;"><p style="margin:8px 0;line-height:1.6;">&quot;Already have two Salesforce vendors&quot;</p></td><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;"><p style="margin:8px 0;line-height:1.6;">&quot;Perfect - they handle the TMS and custom modules. We handle the AI layer that extracts and normalizes before data hits their systems.&quot;</p></td></tr>
+<tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;"><p style="margin:8px 0;line-height:1.6;">&quot;Credit-based pricing concerns&quot;</p></td><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;"><p style="margin:8px 0;line-height:1.6;">&quot;We do fixed-price projects. You&#039;ll know exactly what it costs. No surprise credit burns.&quot;</p></td></tr>
+<tr style="background:#f8fafc;"><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;"><p style="margin:8px 0;line-height:1.6;">&quot;Small company, might be below threshold&quot;</p></td><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;"><p style="margin:8px 0;line-height:1.6;">&quot;The project scope matters more than company size. A focused rate extraction tool is right-sized.&quot;</p></td></tr>
+<tr style="background:#ffffff;"><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;"><p style="margin:8px 0;line-height:1.6;">&quot;Industry-specific logistics complexity&quot;</p></td><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;"><p style="margin:8px 0;line-height:1.6;">&quot;We&#039;ve done POC work with Expeditors. We understand the freight data landscape.&quot;</p></td></tr>
+<tr style="background:#f8fafc;"><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#475569;"><p style="margin:8px 0;line-height:1.6;">&quot;Tried AP automation, didn&#039;t work&quot;</p></td><td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#334155;"><p style="margin:8px 0;line-height:1.6;">&quot;Off-the-shelf rarely fits freight specifics. Custom solves the nuances that break generic tools.&quot;</p></td></tr></tbody>
+  </table>
+        </div>
+      </details>
+      
+
+      <!-- Follow-up Timeline -->
+      
+
+      <!-- Case Study -->
+      
+      <details class="section" open>
+        <summary>
+          <div class="section-icon" style="background:#faf5ff;color:#7c3aed;">&#x1f4d6;</div>
+          <h2>Case Study to Reference</h2>
+        </summary>
+        <div class="section-body markdown-content">
+          <p style="margin:8px 0;line-height:1.6;"><strong>Document AI Processing / Manufacturing White Paper Pattern</strong></p>
+<p style="margin:8px 0;line-height:1.6;">| Metric | Value |<br>|--------|-------|<br>| <strong>Challenge</strong> | Inconsistent document formats requiring normalization |<br>| <strong>Solution</strong> | AI-powered extraction and standardization |<br>| <strong>Results</strong> | Automated ingestion from multiple sources |<br>| <strong>Why Relevant</strong> | Same problem: disparate formats (Excel, Word) needing normalization for downstream systems |</p>
+<p style="margin:8px 0;line-height:1.6;"><strong>Craig noted during call:</strong><br>&gt; &quot;That&#039;s the stuff we do&quot; - referring to SharePoint + AI agent for rate extraction</p>
+        </div>
+      </details>
+      
+
+      <!-- Signal Urgency -->
+      
+
+      <!-- Notes -->
+      
+      <details class="section" open>
+        <summary>
+          <div class="section-icon" style="background:#f1f5f9;color:#475569;">&#x1f4dd;</div>
+          <h2>Notes</h2>
+        </summary>
+        <div class="section-body markdown-content">
+          <ul style="padding-left:20px;margin:8px 0;"><li style="margin:4px 0;">Founded 1993 in UK, moved to US in 2002</li>
+<li style="margin:4px 0;">Completely distributed workforce - WFA (Work From Anywhere)</li>
+<li style="margin:4px 0;">Vistage CEO peer group member - strong network</li>
+<li style="margin:4px 0;">Son and Craig&#039;s son both Tottenham fans - personal connection established</li>
+<li style="margin:4px 0;">Third child is &quot;Jag&quot; - deeply invested founder</li>
+<li style="margin:4px 0;">10-year BHAG - this transformation is foundational</li>
+<li style="margin:4px 0;">AI task force already exploring use cases</li>
+<li style="margin:4px 0;">Copilot turned on for some staff, Marketing GPT in ChatGPT</li></ul>
+<p style="margin:8px 0;line-height:1.6;"><strong>What Their Clients Want:</strong><br>&gt; &quot;Save us from ourselves. Show us where we&#039;re doing the stupid things.&quot;<br>- Status updates are &quot;table stakes&quot; / &quot;yesterday&#039;s news&quot;<br>- Want actionable insights: lower landed costs, improve utilization, reduce damages</p>
+<p style="margin:8px 0;line-height:1.6;"><strong>Cultural Fit:</strong><br>- Entrepreneurial mindset (&quot;Maverick&quot; profile - undaunted by failure)<br>- Values company culture highly<br>- British humor, good rapport with Craig</p>
+        </div>
+      </details>
+      
+
+      
+      <!-- How to Read This Playbook -->
+      <details style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;margin:32px 0 8px 0;overflow:hidden;">
+        <summary style="padding:14px 20px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;user-select:none;font-size:13px;color:#64748b;font-weight:600;letter-spacing:0.3px;">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#e2e8f0;color:#475569;font-size:12px;font-weight:700;flex-shrink:0;">?</span>
+          <span>How to Read This Playbook</span>
+          <span style="margin-left:auto;font-size:11px;color:#94a3b8;font-weight:400;">SDR Quick Reference</span>
+        </summary>
+        <div style="padding:4px 20px 20px;font-size:12.5px;line-height:1.6;color:#475569;">
+
+          <!-- Classification Meanings -->
+          <div style="margin-bottom:16px;">
+            <div style="font-weight:700;color:#334155;font-size:13px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Classification Meanings</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 12px;">
+              <span><span style="display:inline-block;background:#dc2626;color:#fff;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:700;">HOT</span> Active buying signals, ready for immediate outreach</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:4px;">
+              <span><span style="display:inline-block;background:#ea580c;color:#fff;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:700;">WARM</span> Interest shown, needs nurturing before direct pitch</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:4px;">
+              <span><span style="display:inline-block;background:#2563eb;color:#fff;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:700;">NURTURE</span> Long-term potential, stay on radar with value-adds</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:4px;">
+              <span><span style="display:inline-block;background:#6b7280;color:#fff;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:700;">MONITOR</span> Insufficient data, watch for future signals</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:4px;">
+              <span><span style="display:inline-block;background:#374151;color:#9ca3af;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:700;">DISQUALIFY</span> Not a fit &mdash; wrong ICP, no budget, or dead lead</span>
+            </div>
+          </div>
+
+          <!-- Score Breakdown -->
+          <div style="margin-bottom:16px;">
+            <div style="font-weight:700;color:#334155;font-size:13px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Score Breakdown (100 pts)</div>
+            <table style="width:100%;border-collapse:collapse;font-size:12px;">
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:4px 8px;font-weight:600;color:#334155;">Decision Authority</td>
+                <td style="padding:4px 8px;text-align:right;color:#64748b;">25 pts</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;background:#f1f5f9;">
+                <td style="padding:4px 8px;font-weight:600;color:#334155;">Budget Indicators</td>
+                <td style="padding:4px 8px;text-align:right;color:#64748b;">25 pts</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:4px 8px;font-weight:600;color:#334155;">Pain Point Clarity</td>
+                <td style="padding:4px 8px;text-align:right;color:#64748b;">20 pts</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;background:#f1f5f9;">
+                <td style="padding:4px 8px;font-weight:600;color:#334155;">Technical Fit</td>
+                <td style="padding:4px 8px;text-align:right;color:#64748b;">15 pts</td>
+              </tr>
+              <tr>
+                <td style="padding:4px 8px;font-weight:600;color:#334155;">Timing Alignment</td>
+                <td style="padding:4px 8px;text-align:right;color:#64748b;">15 pts</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Confidence Levels -->
+          <div style="margin-bottom:16px;">
+            <div style="font-weight:700;color:#334155;font-size:13px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Confidence Levels</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="background:#dcfce7;color:#166534;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600;">HIGH 75+ &mdash; Trust the playbook</span>
+              <span style="background:#fef9c3;color:#854d0e;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600;">MEDIUM 50&ndash;74 &mdash; Verify key signals</span>
+              <span style="background:#fee2e2;color:#991b1b;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600;">LOW &lt;50 &mdash; Use cautiously, enrich data</span>
+            </div>
+          </div>
+
+          <!-- Outreach Status -->
+          <div style="margin-bottom:16px;">
+            <div style="font-weight:700;color:#334155;font-size:13px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Outreach Status</div>
+            <div style="display:flex;flex-direction:column;gap:4px;">
+              <div><span style="color:#059669;font-weight:700;">Ready to Outreach</span> &mdash; Green light, proceed with personalized outreach</div>
+              <div><span style="color:#ea580c;font-weight:700;">Hold &ndash; Craig Active</span> &mdash; Craig has an active relationship; coordinate before contact</div>
+              <div><span style="color:#d97706;font-weight:700;">Hold &ndash; Podcast Pending</span> &mdash; Podcast invite in progress; wait for resolution</div>
+            </div>
+          </div>
+
+          <!-- Quick Tips -->
+          <div>
+            <div style="font-weight:700;color:#334155;font-size:13px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Quick Tips</div>
+            <ul style="padding-left:18px;margin:0;color:#475569;">
+              <li style="margin:3px 0;">Always personalize draft emails with prospect-specific details before sending</li>
+              <li style="margin:3px 0;">Cross-check pain points against CRM notes and call transcript evidence</li>
+              <li style="margin:3px 0;">Flag any data inconsistencies or concerns to Bojan immediately</li>
+              <li style="margin:3px 0;">For MEDIUM confidence playbooks, verify at least 2 key signals independently</li>
+              <li style="margin:3px 0;">Use the score breakdown to identify which areas need deeper discovery</li>
+            </ul>
+          </div>
+
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div>Generated March 10, 2026 at 03:55 PM</div>
+    <div style="margin-top:4px;">Delivery Tier: APPROVED &middot; Data Tier: 1 &middot; Confidence: 90%</div>
+    <div style="margin-top:12px;color:#cbd5e1;">Powered by <a href="https://blynked.io" target="_blank">Blynked</a></div>
+  </div>
+
+</body>
+</html>
